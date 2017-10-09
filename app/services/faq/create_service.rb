@@ -9,21 +9,20 @@ module FaqModule
     end
 
     def call
-      if @hashtag == nil || @hashtag == ""
+      if @hashtags == nil || @hashtags == ""
         return 'Hashtag Obrigatória'
       end
 
       begin
         Faq.transaction do
           faq = Faq.create(question: @question, answer: @answer, company: @company)
-          return "Hashtag Obrigatória" if @hashtags == nil
           @hashtags.split(/[\s,]+/).each do |hashtag|
             faq.hashtags << Hashtag.create(name: hashtag)
           end
         end
         "Criado com sucesso"
       rescue
-        "Problemas na criação"           
+        "Problemas na criação"
       end
     end
   end
