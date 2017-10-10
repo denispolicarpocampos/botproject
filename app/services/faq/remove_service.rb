@@ -13,7 +13,7 @@ module FaqModule
       rescue
         return "Questão inválida, verifique o Id"
       end
-
+      
       Faq.transaction do
         # Deleta as tags associadas que não estejam associadas a outros faqs
         faq.hashtags.each do |h|
