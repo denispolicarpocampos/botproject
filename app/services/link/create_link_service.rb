@@ -2,7 +2,7 @@ module LinkModule
   class CreateLink
     def initialize(params)
       # TODO: identify origin and set company
-      @company = params["company-original"]
+      @company = Company.last
       @link = params["link-original"]
       @hashtags = params["hashtags-original"]
     end

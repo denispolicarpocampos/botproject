@@ -7,8 +7,11 @@ describe HelpService do
       expect(response).to match('help')
       expect(response).to match('Adicione ao Faq')
       expect(response).to match('Remova ID')
+      expect(response).to match('Adiciona link')
+      expect(response).to match('Remove link')
       expect(response).to match('O que você sabe sobre X')
       expect(response).to match('Pesquise a hashtag X')
+      expect(response).to match('Lista de links')
       expect(response).to match('Perguntas e Respostas')
     end
   end
