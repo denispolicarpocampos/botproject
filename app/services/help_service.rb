@@ -10,7 +10,7 @@ class HelpService
     response += "*Adiciona link\n\n"
     response += ">Adiciona link a lista de links\n\n"
     response += "*Remove link\n\n"
-    response += ">Remove link da lista de links\n\n"
+    response += ">Remove link da lista de links baseado no ID dele\n\n"
     response += "*O que você sabe sobre X*\n"
     response += ">Pesquisa por palavra na lista de perguntas e respostas\n\n"
     response += "*Pesquise a hashtag X*\n"
