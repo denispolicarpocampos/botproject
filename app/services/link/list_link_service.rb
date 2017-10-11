@@ -8,15 +8,17 @@ module LinkModule
     end
 
     def call
-      if @action == "list_link"
-        links = @company.links
-      else @action == "search_link_by_hashtag"
+      if @action == "search_link"
+        links = Link.search(@query).where(company: @company)
+      elsif @action == "search_link_by_hashtag"
         links = []
         @company.links.each do |link|
           link.hashtags.each do |hashtag|
             links << link if hashtag.name == @query
           end
         end
+      else
+        links = @company.links
       end
 
       response = "*Links* \n\n"
