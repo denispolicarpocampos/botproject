@@ -21,6 +21,7 @@ module LinkModule
 
       response = "*Links* \n\n"
       links.each do |f|
+        response += "*#{f.id}* - "
         response += "*#{f.link}* - "
         f.hashtags.each do |h|
           response += "_##{h.name}_ "
