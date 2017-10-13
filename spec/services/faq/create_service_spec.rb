@@ -18,13 +18,6 @@ describe FaqModule::CreateService do
       expect(response).to match("Hashtag Obrigatória")
     end
 
-    it "Without link params, will receive success" do
-      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
-
-      response = @createService.call()
-      expect(response).to match("Criado com sucesso")
-    end
-
     it "With valid params, receive success message" do
       @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
 
