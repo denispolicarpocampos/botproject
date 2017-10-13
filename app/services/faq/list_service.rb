@@ -29,6 +29,7 @@ module FaqModule
         f.hashtags.each do |h|
           response += "_##{h.name}_ "
         end
+
         if f.links != nil
           f.links.each do |l|
             response += "_##{l.link}_ "
