@@ -24,11 +24,13 @@ module FaqModule
             link.hashtags << Hashtag.create(name: hashtag)
           end
           return "Criado com sucesso"
-        elsif @link == 'Não' || 'não'
+        elsif @link == 'Não'
           @hashtags.split(/[\s,]+/).each do |hashtag|
             faq.hashtags << Hashtag.create(name: hashtag)
           end
-          return "Criado com sucesso"
+          return "Criado com sucesso!"
+        else
+          "Não foi possível criar pois o link é invalido"
         end
       end
     end
