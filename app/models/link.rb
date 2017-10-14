@@ -1,6 +1,6 @@
 class Link < ActiveRecord::Base
 
-  validates :link, :url => true
+  #validates :link, :url => true
 
   validates_presence_of :link
 
