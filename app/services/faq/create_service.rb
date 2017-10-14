@@ -28,8 +28,6 @@ module FaqModule
 
         begin
           link = Link.create(link: @link, company: @company)
-
-          puts link.link
           faq.links << link
           @hashtags.split(/[\s,]+/).each do |hashtag|
             faq.hashtags << Hashtag.create(name: hashtag)
