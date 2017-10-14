@@ -16,20 +16,27 @@ module FaqModule
       return 'Hashtag Obrigatória' if @hashtags == nil
       Faq.transaction do
         faq = Faq.create(question: @question, answer: @answer, company: @company)
-        if @link =~ /\A#{URI::regexp}\z/
+
+        if @link == 'Não'
+          @hashtags.split(/[\s,]+/).each do |hashtag|
+            faq.hashtags << Hashtag.create(name: hashtag)
+          end
+          return "Criado com sucesso"
+        else
+          "Não foi possível criar pois o link é invalido"
+        end
+
+        begin
           link = Link.create(link: @link, company: @company)
+
+          puts link.link
           faq.links << link
           @hashtags.split(/[\s,]+/).each do |hashtag|
             faq.hashtags << Hashtag.create(name: hashtag)
             link.hashtags << Hashtag.create(name: hashtag)
           end
           return "Criado com sucesso"
-        elsif @link == 'Não'
-          @hashtags.split(/[\s,]+/).each do |hashtag|
-            faq.hashtags << Hashtag.create(name: hashtag)
-          end
-          return "Criado com sucesso!"
-        else
+        rescue
           "Não foi possível criar pois o link é invalido"
         end
       end

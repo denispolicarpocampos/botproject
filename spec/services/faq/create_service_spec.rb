@@ -25,6 +25,22 @@ describe FaqModule::CreateService do
       expect(response).to match("Criado com sucesso")
     end
 
+    it "With valid params, receive success message" do
+      link = 'Não'
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => link})
+
+      response = @createService.call()
+      expect(response).to match("Criado com sucesso")
+    end
+
+    it "With valid params, receive success message, link any string" do
+      link = FFaker::Name.name
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => link})
+
+      response = @createService.call()
+      expect(response).to match("Não foi possível criar pois o link é invalido")
+    end
+
     it "With valid params, find question and anwser in database" do
       @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
 
