@@ -7,11 +7,12 @@ gem 'pg'
 gem 'rake'
 gem 'pg_search'
 
-gem 'valid_url'
+gem "validate_url"
+
 
 group :development do
  gem "tux"
- 
+
 end
 
 group :test do
