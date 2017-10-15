@@ -50,6 +50,19 @@ describe FaqModule::CreateService do
       expect(Link.last.link).to match(@link)
     end
 
+    it "With invalid params, don't to find question and anwser in database" do
+      link = FFaker::Name.name
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => link})
+
+      response = @createService.call()
+
+      expect(Faq.all.count).to eq(0)
+      expect(Link.all.count).to eq(0)
+
+    end
+
+
+
     it "With valid params, hashtags are created" do
       @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
 

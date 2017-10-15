@@ -14,25 +14,25 @@ module FaqModule
 
     def call
       return 'Hashtag Obrigatória' if @hashtags == nil
-      Faq.transaction do
-        begin
-          faq = Faq.create(question: @question, answer: @answer, company: @company)
 
-          if @link == 'Não'
+      Faq.transaction do
+        if @link == 'Não'
+          faq = Faq.create(question: @question, answer: @answer, company: @company)
+          @hashtags.split(/[\s,]+/).each do |hashtag|
+            faq.hashtags << Hashtag.create(name: hashtag)
+          end
+          return "Criado com sucesso"
+        else
+          link = Link.create(link: @link, company: @company)
+          if link.valid?
+            faqlink = Faq.create(question: @question, answer: @answer, company: @company)
+            faqlink.links << link
             @hashtags.split(/[\s,]+/).each do |hashtag|
-              faq.hashtags << Hashtag.create(name: hashtag)
-            end
-            return "Criado com sucesso"
-          else
-            link = Link.create(link: @link, company: @company)
-            faq.links << link
-            @hashtags.split(/[\s,]+/).each do |hashtag|
-              faq.hashtags << Hashtag.create(name: hashtag)
+              faqlink.hashtags << Hashtag.create(name: hashtag)
               link.hashtags << Hashtag.create(name: hashtag)
             end
             return "Criado com sucesso"
           end
-        rescue
           "Não foi possível criar pois o link é invalido"
         end
       end
