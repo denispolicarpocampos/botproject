@@ -14,13 +14,13 @@ Is a ChatBot for a FAQ system. Humans can to insert questions, answers and links
 
 ## Botproject - Examples
 
-###Help
+### Help
 ![alt text](https://github.com/denispolicarpocampos/botproject/blob/master/imgs/help.jpg?raw=true)
 
-###Add to faq
+### Add to faq
 ![alt text](https://github.com/denispolicarpocampos/botproject/blob/master/imgs/addfaq.jpg?raw=true)
 
-###List faq
+### List faq
 ![alt text](https://github.com/denispolicarpocampos/botproject/blob/master/imgs/listfaq.jpg?raw=true)
 
 ### List links
