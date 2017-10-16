@@ -1,7 +1,7 @@
 require 'json'
 require 'sinatra'
 require 'sinatra/activerecord'
-require 'validate_url'
+#require 'validate_url'
 
 
 require './config/database'

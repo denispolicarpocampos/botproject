@@ -7,7 +7,8 @@ gem 'pg'
 gem 'rake'
 gem 'pg_search'
 
-gem "validate_url"
+
+
 
 
 group :development do
