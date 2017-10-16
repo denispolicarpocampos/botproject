@@ -30,12 +30,15 @@ Is a ChatBot for a FAQ system. Humans can to insert questions, answers and links
 ![alt text](https://github.com/denispolicarpocampos/botproject/blob/master/imgs/searchbyhashtag.jpg?raw=true)
 
 ## Functions
+* Individual FAQS and Links to companies.
 * Add question, answer on FAQ
 * Add link for question of FAQ
 * Add link on list of links
 * Search question/answer to hashtag
 * Search question/answer to word
 * Search link to hashtag
+
+
 
 
 
