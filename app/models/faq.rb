@@ -6,6 +6,10 @@ class Faq < ActiveRecord::Base
 
   has_many :faq_hashtags
   has_many :hashtags, through: :faq_hashtags
+
+  has_many :faq_links
+  has_many :links, through: :faq_links
+
   belongs_to :company
 
   # include PgSearch

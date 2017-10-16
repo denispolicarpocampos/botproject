@@ -13,12 +13,22 @@ describe LinkModule::RemoveLink do
       expect(response).to match("Link deletado com sucesso!")
     end
 
+    it "With valid ID, remove Link" do
+      faq =  create(:faq, company:@company)
+      link = create(:link, company: @company)
+      create(:faq_link, link: link, faq: faq)
+      @removeService = LinkModule::RemoveLink.new({ "id" => link.id })
+      response = @removeService.call()
+      expect(response).to match("O link está associado a um FAQ, para remove-lo você deve deletar o FAQ!")
+    end
+
     it "Without valid ID" do
       link = create(:link, company: @company)
       @removeService = LinkModule::RemoveLink.new({ "id" => rand(1..9999) })
       response = @removeService.call()
       expect(response).to match("Link inválido, verifique o Id")
     end
+
 
     it "Remove from database" do
       link = create(:link, company: @company)

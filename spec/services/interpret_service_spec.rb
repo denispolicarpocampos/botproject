@@ -39,6 +39,18 @@ describe InterpretService do
       expect(response).to match(faq.question)
       expect(response).to match(faq.answer)
     end
+
+    it "With valid query, find question, answer and link in response" do
+      faq = create(:faq, company: @company)
+      link = create(:link, company: @company)
+      create(:faq_link, link: link, faq: faq)
+
+      response = InterpretService.call('search', {"query" => faq.question.split(" ").sample})
+
+      expect(response).to match(faq.question)
+      expect(response).to match(faq.answer)
+      expect(response).to match(link.link)
+    end
   end
 
   describe '#search by category' do
@@ -57,6 +69,20 @@ describe InterpretService do
       expect(response).to match(faq.question)
       expect(response).to match(faq.answer)
     end
+
+    it "With valid hashtag, find question and answer and link in response" do
+      faq = create(:faq, company: @company)
+      hashtag = create(:hashtag, company: @company)
+      link =  create(:link, company: @company)
+      create(:faq_hashtag, faq: faq, hashtag: hashtag)
+      create(:faq_link, faq: faq, link: link)
+
+      response = InterpretService.call('search_by_hashtag', {"query" => hashtag.name})
+
+      expect(response).to match(faq.question)
+      expect(response).to match(faq.answer)
+      expect(response).to match(link.link)
+    end
   end
 
   describe '#create' do
@@ -64,6 +90,7 @@ describe InterpretService do
       @question = FFaker::Lorem.sentence
       @answer = FFaker::Lorem.sentence
       @hashtags = "#{FFaker::Lorem.word}, #{FFaker::Lorem.word}"
+      @link = FFaker::Internet.http_url
     end
 
     it "Without hashtag params, receive a error" do
@@ -71,19 +98,26 @@ describe InterpretService do
       expect(response).to match("Hashtag Obrigatória")
     end
 
+    it "Without link params, receive success" do
+      link = 'Não'
+      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => link})
+      expect(response).to match("Criado com sucesso")
+    end
+
     it "With valid params, receive success message" do
-      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
+      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
       expect(response).to match("Criado com sucesso")
     end
 
     it "With valid params, find question and anwser in database" do
-      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
+      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
       expect(Faq.last.question).to match(@question)
       expect(Faq.last.answer).to match(@answer)
+      expect(Link.last.link).to match(@link)
     end
 
     it "With valid params, hashtags are created" do
-      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
+      response = InterpretService.call('create', {"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
       expect(@hashtags.split(/[\s,]+/).first).to match(Hashtag.first.name)
       expect(@hashtags.split(/[\s,]+/).last).to match(Hashtag.last.name)
     end

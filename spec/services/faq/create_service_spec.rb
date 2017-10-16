@@ -7,33 +7,64 @@ describe FaqModule::CreateService do
     @question = FFaker::Lorem.sentence
     @answer = FFaker::Lorem.sentence
     @hashtags = "#{FFaker::Lorem.word}, #{FFaker::Lorem.word}"
+    @link = FFaker::Internet.http_url
   end
 
   describe '#call' do
     it "Without hashtag params, will receive a error" do
-      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer})
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "link-original" => @link})
 
       response = @createService.call()
       expect(response).to match("Hashtag Obrigatória")
     end
 
     it "With valid params, receive success message" do
-      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
 
       response = @createService.call()
       expect(response).to match("Criado com sucesso")
     end
 
+    it "With valid params, receive success message" do
+      link = 'Não'
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => link})
+
+      response = @createService.call()
+      expect(response).to match("Criado com sucesso")
+    end
+
+    it "With valid params, receive success message, link any string" do
+      link = FFaker::Name.name
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => link})
+
+      response = @createService.call()
+      expect(response).to match("Não foi possível criar pois o link é invalido")
+    end
+
     it "With valid params, find question and anwser in database" do
-      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
 
       response = @createService.call()
       expect(Faq.last.question).to match(@question)
       expect(Faq.last.answer).to match(@answer)
+      expect(Link.last.link).to match(@link)
     end
 
+    it "With invalid params, don't to find question and anwser in database" do
+      link = FFaker::Name.name
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => link})
+
+      response = @createService.call()
+
+      expect(Faq.all.count).to eq(0)
+      expect(Link.all.count).to eq(0)
+
+    end
+
+
+
     it "With valid params, hashtags are created" do
-      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags})
+      @createService = FaqModule::CreateService.new({"question-original" => @question, "answer-original" => @answer, "hashtags-original" => @hashtags, "link-original" => @link})
 
       response = @createService.call()
       expect(@hashtags.split(/[\s,]+/).first).to match(Hashtag.first.name)

@@ -12,6 +12,8 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
     bond (0.5.1)
     concurrent-ruby (1.0.5)
@@ -28,6 +30,7 @@ GEM
       activerecord (>= 4.2)
       activesupport (>= 4.2)
       arel (>= 6)
+    public_suffix (3.0.0)
     rack (2.0.3)
     rack-protection (2.0.0)
       rack
@@ -72,6 +75,9 @@ GEM
       sinatra (>= 1.2.1)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
+    validate_url (1.0.2)
+      activemodel (>= 3.0.0)
+      addressable
 
 PLATFORMS
   ruby
@@ -89,6 +95,7 @@ DEPENDENCIES
   sinatra
   sinatra-activerecord
   tux
+  validate_url
 
 BUNDLED WITH
    1.15.4

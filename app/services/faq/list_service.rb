@@ -27,11 +27,18 @@ module FaqModule
         response += "*#{f.question}*\n"
         response += ">#{f.answer}\n"
         f.hashtags.each do |h|
-          response += "_##{h.name}_ "
+          response += "_##{h.name}_ \n"
+        end
+
+        if f.links != nil
+          f.links.each do |l|
+            response += ">#{l.link}"
+          end
         end
         response += "\n\n"
       end
       (faqs.count > 0)? response : "Nada encontrado"
+
     end
   end
 end
